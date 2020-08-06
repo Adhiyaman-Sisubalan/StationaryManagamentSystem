@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Student EduRecord</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css">
+ <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+
+.container{
+	padding-left: 160px;
+	width:60%;
+}
+.back{
+	padding-left: 660px;
+	
+
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+
+
+</style>
+</head>
+<body>
+<div class="topnav">
+<a href="/search">STUDENT MANAGEMENT SYSTEM</a>
+
+</div>
+<br/>
+<br/>
+
+
+<div class="container">
+	<h2> Education Record </h2>
+	<br/>
+<br/>
+	<table class="table table-hover">
+		<tr align="center">
+			<th>Student ID</th>
+			<th>Grade ID</th>
+			<th>Grade</th>
+			<th>Course ID</th>
+			<th>faculty ID</th>
+			<th>Course Unit</th>
+		</tr>
+		<tr align="center" th:each="grade: ${gradeLists}">
+			<td th:text="${grade.student.studentId}" ></td>
+			<td th:text="${grade.gradeId}" ></td>
+			<td th:text="${grade.grade}" ></td>
+			<td th:text="${grade.course.courseId}" ></td>
+			<td th:text="${grade.course.department.departmentName}" ></td>
+			<td th:text="${grade.course.courseUnit}" ></td>
+
+		</tr>
+		
+			<tr>
+			<td>
+				<a th:href="@{/student/calculateGpa/}+${student.studentId}">Calculate GPA</a>
+			</td>
+			</tr>
+		
+			<tr >
+				<td>YourGPA</td><td th:text="${Gpa}" ></td>
+			</tr>
+		
+			<tr>
+			<td th:if="${type == 'student'}">
+				<a class="btn btn-primary" th:href="@{/student/home}">Back</a>
+			</td>
+			<td th:if="${type == 'admin'}">
+				<a th:href="@{/admin/studentlist}">Back to students list</a>
+			</td>
+			</tr>
+	</table>
+	</div>
+ <div class="footer">
+   		<p>CA Project | Made by team 3</p>
+   </div>
+</body>
+</html>

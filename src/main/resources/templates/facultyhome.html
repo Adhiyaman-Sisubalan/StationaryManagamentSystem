@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>FACULTY HOMEPAGE</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+
+.container{
+	padding-left: 100px;
+	width:60%;
+}
+.container-1{
+	padding-left: 50px;
+	width:50%;
+}
+.back{
+	padding-left: 660px;
+	
+
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+
+
+</style>
+
+</head>
+<body>
+<div class="topnav">
+<a href="/search">STUDENT MANAGEMENT SYSTEM</a>
+<div class="topnav-right">
+<a th:href="@{/login/logout}">Logout</a>
+</div>
+</div>
+<br/>
+<h2>Welcome, <span th:text="${faculty.firstName}+' '+${faculty.middleName}+' '+${faculty.surname}"></span></h2>	
+
+<br/>
+<br/>
+
+<div class="container">
+<table  class="table table-hover">
+		<h3>My Details</h3>
+		<tr>
+<!-- 		<td th:text="${faculty.facultyId}"></td> -->
+		<td th:text="${faculty.firstName}+' '+${faculty.middleName}+' '+${faculty.surname}"></td>
+		<td th:text="${faculty.email}"></td>
+		<td th:text="${faculty.mobileNum}"></td>
+		<td th:text="${faculty.department.departmentName}"></td>
+		
+		<td><a class="btn btn-primary" th:href="@{/faculty/info}">Edit</a></td></tr>
+</table>
+
+</div>
+
+<br/>
+<br/>
+<div class="container">
+<h3>Assigned Courses</h3>
+<div>
+	<table class="table table-hover">
+		<tr align="center">
+			<th>Department</th>
+			<th>Course Code</th>
+			<th>Course Name</th>
+		</tr>
+		<tr align="center" th:each="c: ${coursePage.content}">
+			<td th:text="${c.Department.departmentName}" >Department Name</td>
+			<td><a th:href="@{/faculty/viewcourse(facultyviewcourse=${c.courseId})}" th:text="${c.courseCode}"></a></td>
+			<td><a class="btn btn-success btn-sm" th:href="@{/faculty/viewcourse(facultyviewcourse=${c.courseId})}" th:text="${c.courseName}"></a></td>
+		</tr>
+    	<tr th:if="${coursePage.totalPages > 0}" class="pagination">
+    		<td th:each="pageNumber : ${pageNumbers}">
+    			<a th:href="@{/faculty/home(size=${coursePage.size}, page=${pageNumber})}"
+        		th:text=${pageNumber}
+        		th:class="${pageNumber==coursePage.number + 1} ? active"></a>
+    		</td>
+    	</tr>
+    </table>
+    
+</div><br><br><br>
+<!-- <p><a th:href="@{/faculty/studentlist}">List of all students</a></p> -->
+
+<!-- <p><a th:href="@{/faculty/departmentlist}">List of all departments</a></p> -->
+<!-- <p><a th:href="@{/faculty/facultylist}">List of all faculties</a></p> -->
+<!-- <p><a th:href="@{/faculty/courselist}">List of all courses</a></p> -->
+<!-- <p><a th:href="@{/faculty/courseapplicationlist}">List of all course applications</a></p> -->
+<br/>
+
+</div>
+<div class="footer">
+   		<p>CA Project | Made by team 3</p>
+   </div>
+</body>
+</html>

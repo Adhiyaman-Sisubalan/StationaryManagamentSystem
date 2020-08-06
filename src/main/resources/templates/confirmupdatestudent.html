@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<table>
+	<tr>
+		<td>Admin ID</td>
+		<td>Name</td>
+		<td>Email</td>
+		<td>Mobile Number</td>
+	</tr>
+	<tr align="center">
+		<td th:text="${admin.adminId}">Admin Id</td>
+		<td th:text="${admin.firstName}+' '+${admin.middleName}+' '+${admin.surname}">Admin Name</td>
+		<td th:text="${admin.email}">Admin Email</td>
+		<td th:text="${admin.mobileNum}">Admin Mobile Number</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div>
+<form th:action="@{/admin/updatestudent(id=${student.studentId})}" th:method="post">
+	<h1>Student Information</h1>
+	<table>
+		<tr align="center">
+			<td>Student ID</td>
+			<td>Student Name</td>
+			<td>Age</td>
+			<td>Gender</td>
+			<td>Email</td>
+			<td>Mobile Number</td>
+			<td>Address</td>	
+		</tr>
+		<tr align="center">
+			<td th:text="${student.studentId}" ></td>
+			<td th:text="${student.firstName}+' '+${student.middleName}+' '+${student.surname}"></td>
+			<td th:text="${student.age}" ></td>
+			<td th:text="${student.gender}" ></td>
+			<td th:text="${student.email}" ></td>
+			<td th:text="${student.mobileNum}" ></td>
+			<td th:text="${student.address}" ></td>
+		</tr>
+	</table>
+	
+	<h1>Edit Information</h1>
+	<table>
+		<tr align="center">
+			<td>Student ID</td>
+			<td>Student First Name</td>
+			<td>Student Middle Name</td>
+			<td>Student Surname</td>
+			<td>Age</td>
+			<td>Gender</td>
+			<td>Email</td>
+			<td>Mobile Number</td>
+			<td>Address</td>	
+		</tr>
+		<tr align="center">
+			<td th:text="${student.studentId}">Student ID</td>
+			<td><input type="text" name="updatefname" th:value="${student.firstName}" /></td>
+			<td><input type="text" name="updatemname" th:value="${student.middleName}" /></td>
+			<td><input type="text" name="updatesname" th:value="${student.surname}" /></td>
+			<td><input type="number" name="updateage" th:value="${student.age}" /></td>
+			<td><input type="text" name="updategender" th:value="${student.gender}" /></td>
+			<td><input type="text" name="updateemail" th:value="${student.email}" /></td>
+			<td><input type="number" name="updatemobile" th:value="${student.mobileNum}" /></td>
+			<td><input type="text" name="updateaddress" th:value="${student.address}" /></td>
+		</tr>
+    </table>
+    
+    <h2>Warning</h2>
+    <p>Confirm the changes before clicking update</p>
+
+	<button type="submit" name="confirm" value="yes">Update</button>
+</form>
+
+<div th:if="${error == 'yes'}">
+	<h2 th:text="${emsg}">Error Message</h2>
+</div>
+
+<p><a th:href="@{/admin/home}">Home</a></p>
+<p><a th:href="@{/admin/studentlist}">Return to list of students</a></p>
+</div>

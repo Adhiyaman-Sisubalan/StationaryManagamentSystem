@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Welcome</title>
+        <meta charset="ISO-8859-1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+
+.container{
+	padding-left: 160px;
+	width:60%;
+}
+.back{
+	padding-left: 660px;
+	
+
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+
+
+</style>
+    </head>
+<body>
+<div class="topnav">
+<a href="/search">STUDENT MANAGEMENT SYSTEM</a>
+
+</div>
+	
+	
+<div class="container">
+<br/>
+<br/>
+<br/>
+<br/>
+
+<h2>WELCOME BACK,</h2>
+<br/>
+<br/>
+	 <form action="#" th:action="@{welcome}" th:object="${login}" method="post">
+    	<p>Username: <input type="text" th:field="*{username}" /></p>
+        <p>Password: <input type="text" th:field="*{password}" /></p>
+        <p>
+        <span th:text="${msg}">Both fields cannot be empty</span>
+        </p>
+        <p><input class="btn btn-success" type="submit" value="Submit" /> <input class="btn btn-info" type="reset" value="Reset" /></p>
+    </form>
+</div>
+   <div class="footer">
+   		<p>CA Project | Made by team 3</p>
+   </div>
+</body>
+</html>

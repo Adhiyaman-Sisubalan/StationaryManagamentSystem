@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Grade</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css">
+      
+ <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+
+.container{
+	padding-left: 100px;
+	width:60%;
+}
+.container-one{
+	padding-left: 100px;
+	width:60%;
+}
+.back{
+	padding-left: 660px;
+	
+
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+
+
+</style>
+</head>
+<body>  
+<br/>
+<br/>
+
+<div class="container">
+<table  class="table table-hover">
+		<h3>My Details</h3>
+		<tr>
+<!-- 		<td th:text="${faculty.facultyId}"></td> -->
+		<td th:text="${faculty.firstName}+' '+${faculty.middleName}+' '+${faculty.surname}"></td>
+		<td th:text="${faculty.email}"></td>
+		<td th:text="${faculty.mobileNum}"></td>
+		<td th:text="${faculty.department.departmentName}"></td>
+		
+		<td><a class="btn btn-primary" th:href="@{/faculty/info}">Edit</a></td></tr>
+</table>
+
+<br/>
+<br/>
+<br/>
+
+
+<h3>Grade of<span th:text="' ' +${grade.student.firstName}+' '+${grade.student.middleName}+' '+${grade.student.surname}"></span></h3>
+<form th:action="@{/faculty/updategrade}" method="post">
+<table class="table table-hover" align="center">
+	<tr>
+	<th>Grade Id</th>
+	<th>Grade</th>
+	<th>Course Id</th>
+	<th>Course Code</th>
+	<th>Course Name</th>
+	<th>Student Id</th>
+	<th>Student Name</th>
+	<th></th>
+	</tr>
+		<tr align="center">
+			<td><input type="hidden" th:value="${grade.gradeId}" name="id"><span th:text="${grade.gradeId}"></span></td>
+<!-- 			<td><input type="text" name = "grade" th:value="${grade.grade}"></td> -->
+<td><select name ="grade">
+    <option value="A+">A+</option>
+    <option value="A">A</option>
+    <option value="A-">A-</option>
+    <option value="B+">B+</option>
+    <option value="B">B</option>
+    <option value="B-">B-</option>
+    <option value="C+">C+</option>
+    <option value="C">C</option>
+    <option value="D+">D+</option>
+    <option value="D">D</option>
+    <option value="F">F</option>
+    <option value="Null">Null</option>
+    
+</select></td>
+			<td>
+				<a th:href="@{/faculty/viewcourse(facultyviewcourse=${grade.course.courseId})}"
+        		th:text=${grade.course.courseId}></a>
+			</td>
+			<td><a th:href="@{/faculty/viewcourse(facultyviewcourse=${grade.course.courseId})}" th:text="${grade.course.courseCode}"></a></td>
+			<td><a th:href="@{/faculty/viewcourse(facultyviewcourse=${grade.course.courseId})}"  th:text="${grade.course.courseName}"></a></td>
+			<td>
+				<a th:href="@{/faculty/viewstudent(facultyviewstudent=${grade.student.studentId})}"
+        		th:text=${grade.student.studentId}></a>
+			</td>
+			<td><a th:href="@{/faculty/viewstudent(facultyviewstudent=${grade.student.studentId})}" th:text="${grade.student.firstName}+' '+${grade.student.middleName}+' '+${grade.student.surname}"></a></td>
+			<td><button class="btn btn-success"type="submit">Save</button></td>
+	</tr>
+</table>
+
+</form>
+</div>
+</body>
+</html>

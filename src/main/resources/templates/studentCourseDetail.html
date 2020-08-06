@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css">
+      
+ <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+
+.container{
+	padding-left: 350px;
+	width:80%;
+}
+.container-one{
+	padding-right: 100px;
+	width:80%;
+}
+.back{
+	padding-left: 660px;
+	
+
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+
+
+</style>
+</head>
+<body>		
+<div class="topnav">
+<a href="/search">STUDENT MANAGEMENT SYSTEM</a>
+<a th:href="@{/student/home}">Home</a>
+<div class= "topnav-right">
+	<a th:href="@{/login/logout}">Logout</a>
+</div>
+</div>
+<div class="container">
+<br/>
+<br/>
+	<h2>Course Details</h2>
+		<hr>
+	<form th:object="${courseDetail}" th:action="@{/student/appliedCourse/}+${courseId}" method="post">
+		
+		<fieldset>
+			<b>Department Name:</b> <td th:text="${courseDetail.department.departmentName}" ></td>
+		</fieldset><br/>
+		<fieldset>
+			<b>CourseCode:</b> <td th:text="${courseDetail.courseCode}" ></td>
+		</fieldset><br/>
+		<fieldset>
+			<b>Course Name: </b><td th:text="${courseDetail.courseName}" ></td>
+		</fieldset><br/>
+		<fieldset>
+			<b>Course StartDate:</b> <td th:text="${courseDetail.courseStart}" ></td>
+		</fieldset><br/>
+		<fieldset>
+			<b>Course EndDate:</b> <td th:text="${courseDetail.courseEnd}" ></td>
+		</fieldset><br/>
+		<fieldset>
+			<b>Course Unit:</b> <td th:text="${courseDetail.courseUnit}" ></td>
+		</fieldset><br/>
+		<fieldset>
+			<b>Course Size:</b> <td th:text="${courseDetail.courseSize}" ></td>
+		</fieldset><br/>
+		<br/>
+		<fieldset>
+			<div th:if="${msg == 'apply'}">
+				<button class="btn btn-success" type="submit">Apply Course</button>
+			</div>
+			<div th:unless="${msg == 'apply'}">
+				<a class="btn btn-primary" th:href="@{/student/home}">Back</a>			
+			</div>
+		</fieldset>
+		
+		
+	</form>	
+	</div>
+	<div class="footer">
+   		<p>CA Project | Made by team 3</p>
+   </div>
+</body>
+</html>

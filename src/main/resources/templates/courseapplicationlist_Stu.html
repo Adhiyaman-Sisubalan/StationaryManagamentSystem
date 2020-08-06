@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css">
+      
+ <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+
+.container{
+	padding-right: 100px;
+	width:80%;
+}
+.container-one{
+	padding-right: 100px;
+	width:80%;
+}
+.back{
+	padding-left: 660px;
+	
+
+}
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+
+
+</style>
+</head>
+<body>
+<div class="topnav">
+<a href="/search">STUDENT MANAGEMENT SYSTEM</a>
+<a th:href="@{/student/home}">Home</a>
+<div class= "topnav-right">
+	<a th:href="@{/login/logout}">Logout</a>
+</div>
+
+</div>
+<div class= "container">
+<table class="table table-hover">
+
+
+		<h2> Personal Details</h2>	
+<tr>
+<th scope="row">ID</th>
+<th scope="row">Name</th>
+<th scope="row">Age</th>
+<th scope="row">Gender</th>
+<th scope="row">Email</th>
+<th scope="row">Mobile</th>
+
+</tr>
+		<tr>
+			<td th:text="${student.studentId}" ></td>
+			<td th:text="${student.firstName}+' '+${student.middleName}+' '+${student.surname}"></td>
+			<td th:text="${student.age}" ></td>
+			<td th:text="${student.gender}" ></td>
+			<td th:text="${student.email}" ></td>
+			<td th:text="${student.mobileNum}" ></td>
+						
+			
+		</tr>
+
+</table>
+<a class="btn btn-primary"th:href="@{/student/edit/}+${student.studentId}"> Edit </a>
+<hr>
+<br/>
+<br/>
+
+<a class="btn btn-outline-success" th:href="@{/student/eduRec/}+${student.studentId}"> EducationRecord </a>
+
+
+
+<a class="btn btn-outline-success" th:href="@{/student/list}">Available Courses</a>
+<br/>
+<br/>		
+<h2>List of Student's Applied courses</h2>
+
+<div th:if="${sort == 'all'}">
+	<table class="table table-hover">
+		<tr align="center">
+			<th>Department</th>
+			<th>Course Code</th>
+			<th>Course Name</th>
+			<th>Course StartDate</th>
+			<th>Course End Date</th>
+			<th>Course Unit</th>
+			<th>Course Size</th>
+			<th>Status</th>
+			<th>Student ID</th>
+		</tr>
+		<tr align="center" th:each="ca: ${courseApplicationPage.content}">
+			<td th:text="${ca.course.department.departmentName}" ></td>
+			<td th:text="${ca.course.courseCode}" ></td>
+			<td th:text="${ca.course.courseName}" ></td>
+			<td th:text="${ca.course.courseStart}" ></td>
+			<td th:text="${ca.course.courseEnd}" ></td>
+			<td th:text="${ca.course.courseUnit}" ></td>
+			<td th:text="${ca.course.courseSize}" ></td>
+			<td th:text="${ca.status}" ></td>
+			<td th:text="${ca.student.studentId}" ></td>
+						
+		</tr>
+	</table>
+	
+<a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='approved',size=${courseApplicationPage.size}, page=${pageNumber})}">Approved Courses</a>
+<a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='rejected',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all Reject</a>
+<a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='pending',size=${courseApplicationPage.size}, page=${pageNumber})}">Pending Courses</a>
+		
+	<br/>	
+	<br/>
+	<table>
+    	<tr th:if="${courseApplicationPage.totalPages > 0}" class="pagination">
+    		<td th:each="pageNumber : ${pageNumbers}">
+    			<a th:href="@{/student/courseapplicationlist(sort='all',size=${courseApplicationPage.size}, page=${pageNumber})}"
+        		th:text=${pageNumber}
+        		th:class="${pageNumber==courseApplicationPage.number + 1} ? active"></a>
+    		</td>
+    	</tr>
+    </table>
+</div>
+
+<div th:if="${sort == 'pending'}">
+	<table class="table table-hover">
+		<tr align="center">
+			<td>ApplicationID</td>
+			<td>Status</td>
+			<td>Department</td>
+			<td>Course ID</td>
+			<td>Course Code</td>
+			<td>Student ID</td>
+			<td>Student Name</td>
+		</tr>
+		<tr align="center" th:each="ca: ${courseApplicationPage.content}">
+			<td th:text="${ca.applicationId}" ></td>
+			<td th:text="${ca.status}" ></td>
+			<td th:text="${ca.course.department.departmentName}" ></td>
+			<td th:text="${ca.course.courseId}" ></td>
+			<td th:text="${ca.course.courseCode}" ></td>
+			<td th:text="${ca.student.studentId}" ></td>
+			<td th:text="${ca.student.firstName}+' '+${ca.student.middleName}+' '+${ca.student.surname}" ></td>
+			<td><a th:href="@{/student/deleteCoures/}+${ca.applicationId}"> Delete </a></td>
+		</tr>
+	</table>
+	<table class="table table-hover">
+		<tr>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='approved',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all approved</a></td>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='rejected',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all Reject</a></td>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='all',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all</a></td>
+		</tr>
+	</table>
+		
+	<table>
+    	<tr th:if="${courseApplicationPage.totalPages > 0}" class="pagination">
+    		<td th:each="pageNumber : ${pageNumbers}">
+    			<a th:href="@{/student/courseapplicationlist(sort='pending',size=${courseApplicationPage.size}, page=${pageNumber})}"
+        		th:text=${pageNumber}
+        		th:class="${pageNumber==courseApplicationPage.number + 1} ? active"></a>
+    		</td>
+    	</tr>
+    </table>
+</div>
+
+<div th:if="${sort == 'approved'}">
+	<table class="table table-hover">
+		<tr align="center">
+			<td>Application ID</td>
+			<td>Status</td>
+			<td>Department</td>
+			<td>Course ID</td>
+			<td>Course Code</td>
+			<td>Student ID</td>
+			<td>Student Name</td>
+		</tr>
+		<tr align="center" th:each="ca: ${courseApplicationPage.content}">
+			<td th:text="${ca.applicationId}" ></td>
+			<td th:text="${ca.status}" ></td>
+			<td th:text="${ca.course.department.departmentName}" ></td>
+			<td th:text="${ca.course.courseId}" ></td>
+			<td th:text="${ca.course.courseCode}" ></td>
+			<td th:text="${ca.student.studentId}" ></td>
+			<td th:text="${ca.student.firstName}+' '+${ca.student.middleName}+' '+${ca.student.surname}" ></td>
+			
+		</tr>
+	</table>
+	<table class="table table-hover">
+		<tr>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='pending',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all pending</a></td>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='rejected',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all Reject</a></td>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='all',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all</a></td>
+		</tr>
+	</table>
+		
+	<table>
+    	<tr th:if="${courseApplicationPage.totalPages > 0}" class="pagination">
+    		<td th:each="pageNumber : ${pageNumbers}">
+    			<a th:href="@{/student/courseapplicationlist(sort='approved',size=${courseApplicationPage.size}, page=${pageNumber})}"
+        		th:text=${pageNumber}
+        		th:class="${pageNumber==courseApplicationPage.number + 1} ? active"></a>
+    		</td>
+    	</tr>
+    </table>
+</div>
+<div th:if="${sort == 'rejected'}">
+	<table class="table table-hover">
+		<tr align="center">
+			<td>Application ID</td>
+			<td>Status</td>
+			<td>Department</td>
+			<td>Course ID</td>
+			<td>Course Code</td>
+			<td>Student ID</td>
+			<td>Student Name</td>
+		</tr>
+		<tr align="center" th:each="ca: ${courseApplicationPage.content}">
+			<td th:text="${ca.applicationId}" ></td>
+			<td th:text="${ca.status}" ></td>
+			<td th:text="${ca.course.department.departmentName}" ></td>
+			<td th:text="${ca.course.courseId}" ></td>
+			<td th:text="${ca.course.courseCode}" ></td>
+			<td th:text="${ca.student.studentId}" ></td>
+			<td th:text="${ca.student.firstName}+' '+${ca.student.middleName}+' '+${ca.student.surname}" ></td>
+			
+		</tr>
+	</table>
+	<table class="table table-hover">
+		<tr>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='pending',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all pending</a></td>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='approved',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all approved</a></td>
+			<td><a class="btn btn-primary" th:href="@{/student/courseapplicationlist(sort='all',size=${courseApplicationPage.size}, page=${pageNumber})}">Show all</a></td>
+		</tr>
+	</table>
+		
+	<table>
+    	<tr th:if="${courseApplicationPage.totalPages > 0}" class="pagination">
+    		<td th:each="pageNumber : ${pageNumbers}">
+    			<a th:href="@{/student/courseapplicationlist(sort='rejected',size=${courseApplicationPage.size}, page=${pageNumber})}"
+        		th:text=${pageNumber}
+        		th:class="${pageNumber==courseApplicationPage.number + 1} ? active"></a>
+    		</td>
+    	</tr>
+    </table>
+</div>
+
+</body>
+
+
+</html>
